@@ -7,7 +7,7 @@
 
 
 
-char* defined_command[]={
+const char *defined_command[]={
     "cd",
     "clr",
     "dir",
@@ -24,7 +24,7 @@ int my_cd(char **args){
     return 1;
 }
 int my_clr(char **args){
-    printf("\e[1;1H\e[2J");
+    system("clear");
     return 1;
 
 }
@@ -75,40 +75,42 @@ int execute_my_command(char **args){
     int flag=1;
     int sz=sizeof(defined_command)/sizeof(char *);
     for(i=0;i<sz;i++){
-        if(strcmp(args[0],defined_command[i])){
+        if(!strcmp(args[0],defined_command[i])){
+            // printf("i am in loop %s\n",args[0]);
             flag=0;
             break;
         }
     }
+    // printf("%s\n",args[0]);
     if(flag){
         printf("Command '%s' not found\n",args[0]);
         return 1;
     }
-    if(strcmp(args[0],defined_command[0])){
+    if(!strcmp(args[0],defined_command[0])){
         return my_cd(args);
     }
-    else if(strcmp(args[0],defined_command[1])){
+    else if(!strcmp(args[0],defined_command[1])){
         return my_clr(args);
     }
-    else if(strcmp(args[0],defined_command[2])){
+    else if(!strcmp(args[0],defined_command[2])){
         return my_dir(args);
     }
-    else if(strcmp(args[0],defined_command[3])){
+    else if(!strcmp(args[0],defined_command[3])){
         return my_environ(args);
     }
-    else if(strcmp(args[0],defined_command[4])){
+    else if(!strcmp(args[0],defined_command[4])){
         return my_echo(args);
     }
-    else if(strcmp(args[0],defined_command[5])){
+    else if(!strcmp(args[0],defined_command[5])){
         return my_pause(args);
     }
-    else if(strcmp(args[0],defined_command[6])){
+    else if(!strcmp(args[0],defined_command[6])){
         return my_help(args);
     }
-    else if(strcmp(args[0],defined_command[7])){
+    else if(!strcmp(args[0],defined_command[7])){
         return my_quit(args);
     }
-    else if(strcmp(args[0],defined_command[8])){
+    else if(!strcmp(args[0],defined_command[8])){
         return my_history(args);
     }
     else{
