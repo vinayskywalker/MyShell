@@ -31,7 +31,19 @@ int my_cd(char **args){
     }
     int i=1;
     char *argument=(char *)malloc(sizeof(args));
-    char *path=args[1];
+    // char *path=args[1];
+    string next=args[1];
+    int j=2;
+    while(args[j]!=NULL){
+        next=next + " " + args[j];
+        
+        j++;
+    }
+        char path[next.size()+1];
+    for(int k=0;k<next.size();k++){
+        path[k]=next[k];
+    }
+    path[next.size()]='\0';
     int p=chdir(path);
     if(p==-1){
         printf("error\n");
