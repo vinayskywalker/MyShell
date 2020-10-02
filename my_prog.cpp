@@ -29,7 +29,7 @@ int my_cd(char **args){
     if(args[1]==NULL){
         return 1;
     }
-    int i=1;
+    // int i=1;
     char *argument=(char *)malloc(sizeof(args));
     // char *path=args[1];
     string next=args[1];
@@ -47,6 +47,49 @@ int my_cd(char **args){
     int p=chdir(path);
     if(p==-1){
         printf("error\n");
+    }
+    else{
+       string prev=getenv("PWD");
+       // cout<<prev<<endl<<next<<endl;
+       int stop=prev.size()-1;
+       int start=0;
+        for(int i=0;next.size()>i;i++){
+            if(next[i]=='.' && next[i+1]=='.')
+            {
+                for(int k=stop;k>=0;k--){
+                  if(prev[k]=='/')  
+                  {
+                    stop=k-1;
+                    break;
+                  }
+
+                }
+                start=i+3;
+                i=start-1;
+            }
+            else if(next[i]=='.' && next[i+1]=='/')
+            {
+                start=i+2;
+                i=start-1;
+            }
+
+        }
+        char pwd[stop+next.size()-start+2];
+        for(int k=0;k<=stop;k++){
+            pwd[k]=prev[k];
+            if(k==stop){
+                pwd[++k]='/';
+                for(int j=start;j<next.size();j++){
+                        k++;
+                        pwd[k]=next[j];
+                    }
+
+            pwd[k+1]='\0';
+            }
+        }
+        
+
+        setenv("PWD",pwd,1);
     }
     return 1;
 }
