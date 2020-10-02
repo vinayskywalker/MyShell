@@ -23,7 +23,6 @@ const char *defined_command[]={
 
 int my_cd(char **args){
     if(args[1]==NULL){
-        
         return 1;
     }
     char *path=args[1];
