@@ -24,7 +24,7 @@ int my_cd(char **args){
     return 1;
 }
 int my_clr(char **args){
-    system("clear");
+    printf("\e[1;1H\e[2J");
     return 1;
 
 }
@@ -35,6 +35,16 @@ int my_environ(char **args){
     return 1;
 }
 int my_echo(char **args){
+    if(args[1]==NULL){
+        printf("\n");
+        return 1;
+    }
+    int i=1;
+    while(args[i]!=NULL){
+        printf("%s ",args[i]);
+        i++;
+    }
+    printf("\n");
     return 1;
 }
 int my_pause(char **args){
@@ -153,6 +163,7 @@ void my_helper(){
         // printf("%s\n",input);
 
         args=get_command(input);
+        int i,sz=sizeof(args);
         status=execute_my_command(args);
 
         // status=0;
