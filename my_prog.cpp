@@ -36,17 +36,16 @@ int my_cd(char **args){
     int j=2;
     while(args[j]!=NULL){
         next=next + " " + args[j];
-        
         j++;
     }
-        char path[next.size()+1];
+    char path[next.size()+1];
     for(int k=0;k<next.size();k++){
         path[k]=next[k];
     }
     path[next.size()]='\0';
     int p=chdir(path);
     if(p==-1){
-        printf("error\n");
+        printf("cd: The directory %s does not exist \n",path);
     }
     else{
        string prev=getenv("PWD");
@@ -54,21 +53,17 @@ int my_cd(char **args){
        int stop=prev.size()-1;
        int start=0;
         for(int i=0;next.size()>i;i++){
-            if(next[i]=='.' && next[i+1]=='.')
-            {
+            if(next[i]=='.' && next[i+1]=='.'){
                 for(int k=stop;k>=0;k--){
-                  if(prev[k]=='/')  
-                  {
+                  if(prev[k]=='/'){
                     stop=k-1;
                     break;
                   }
-
                 }
                 start=i+3;
                 i=start-1;
             }
-            else if(next[i]=='.' && next[i+1]=='/')
-            {
+            else if(next[i]=='.' && next[i+1]=='/'){
                 start=i+2;
                 i=start-1;
             }
@@ -80,15 +75,12 @@ int my_cd(char **args){
             if(k==stop){
                 pwd[++k]='/';
                 for(int j=start;j<next.size();j++){
-                        k++;
-                        pwd[k]=next[j];
-                    }
-
-            pwd[k+1]='\0';
+                    k++;
+                    pwd[k]=next[j];
+                }
+                pwd[k+1]='\0';
             }
         }
-        
-
         setenv("PWD",pwd,1);
     }
     return 1;
@@ -96,7 +88,6 @@ int my_cd(char **args){
 int my_clr(char **args){
     printf("\e[1;1H\e[2J");
     return 1;
-
 }
 int my_dir(char **args){
     DIR *dir1;
@@ -206,8 +197,7 @@ int my_history(char **args){
                 cout<<" "<<*it1<<" ";
             }
             cout<<endl;
-    } 
-            
+    }      
     return 1;
 }
 
@@ -309,7 +299,9 @@ void my_helper(){
     //terminal needs to run atleast one time
     // thats why use do while
     do{
-        printf("# ");
+        cout<<"user@sp:~";
+        cout<<get_current_dir_name();
+        printf("~# ");
         input=read_command();
         // printf("%s\n",input);
 
@@ -322,7 +314,6 @@ void my_helper(){
         {
             while(args[j]!=NULL){
                 temp.push_back(args[j]);
-
                 j++;
             }
             if(history.size()==100)
@@ -338,6 +329,9 @@ void my_helper(){
     while(status);
 }
 int main(int argc,char** argv){
+    if(argc>1){
+        freopen(argv[1],"r",stdin);
+    }
     my_helper();
     return 0;
 }
