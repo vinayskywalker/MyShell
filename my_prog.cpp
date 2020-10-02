@@ -29,6 +29,8 @@ int my_cd(char **args){
     if(args[1]==NULL){
         return 1;
     }
+    int i=1;
+    char *argument=(char *)malloc(sizeof(args));
     char *path=args[1];
     int p=chdir(path);
     if(p==-1){
@@ -57,7 +59,7 @@ int my_dir(char **args){
     return 1;
 }
 int my_environ(char **args){
-     cout<<getenv(args[1])<<endl;
+    cout<<getenv(args[1])<<endl;
     return 1;
 }
 int my_echo(char **args){
@@ -74,14 +76,19 @@ int my_echo(char **args){
     return 1;
 }
 int my_pause(char **args){
+    printf("Shell Paused\n");
+    while(1){
+        if(fgetc(stdin)=='\n'){
+            break;
+        }
+    }
     return 1;
 }
 int my_help(char **args){
     return 1;
 }
 int my_quit(char **args){
-    exit(0);
-    return 1;
+    return 0;
 }
 int my_history(char **args){
      int i=0;
