@@ -22,6 +22,14 @@ const char *defined_command[]={
 };
 
 int my_cd(char **args){
+    if(args[1]==NULL){
+        return 1;
+    }
+    char *path=args[1];
+    int p=chdir(path);
+    if(p==-1){
+        printf("error\n");
+    }
     return 1;
 }
 int my_clr(char **args){
