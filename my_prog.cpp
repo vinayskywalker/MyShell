@@ -140,7 +140,60 @@ int my_pause(char **args){
     return 1;
 }
 int my_help(char **args){
-    return 1;
+    if(args[1]==NULL){
+        printf("These are the command Available\n");
+        printf("cd\n");
+        printf("clr\n");
+        printf("dir\n");
+        printf("environ\n");
+        printf("echo\n");
+        printf("pause\n");
+        printf("help\n");
+        printf("quit\n");
+        printf("history\n");
+        return 1;
+    }
+    if(!strcmp(args[1],"cd")){
+        printf("cd - Change the shell working directory.\n");
+        return 1;
+    }
+    else if(!strcmp(args[1],"clr")){
+        printf("clr - Clear the Screen.\n");
+        return 1;
+    }
+    else if(!strcmp(args[1],"dir")){
+        printf("dir <directory> - list directory contents\n");
+        return 1;
+    }
+    else if(!strcmp(args[1],"environ")){
+        printf("environ - List all the environment strings of current shell and bash shell.\n");
+        return 1;
+    }
+    else if(!strcmp(args[1],"echo")){
+        printf("echo <comment> - Display <comment> on the display followed by a new line.\n");
+        return 1;
+    }
+    else if(!strcmp(args[1],"pause")){
+        printf("pause - Pause Operation of shell until ‘Enter’ is pressed.\n");
+        return 1;
+    }
+    else if(!strcmp(args[1],"quit")){
+        printf("quit - Quit the shell.\n");
+        return 1;
+    }
+    else if(!strcmp(args[1],"help")){
+        printf("help - Display User Manual.\n");
+        return 1;
+    }
+    else if(!strcmp(args[1],"history")){
+        printf("history - Display a list of previously executed commands.\n");
+        return 1;
+    }
+    else{
+        printf("Command '%s' not found\n",args[1]);
+        return 1;
+    }
+
 }
 int my_quit(char **args){
     return 0;
