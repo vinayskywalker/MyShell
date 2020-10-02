@@ -5,8 +5,12 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <dirent.h>
-
-
+#include<iostream>
+#include <vector>
+#include <list> 
+// #include<bits/stdc++.h> 
+using namespace std; 
+list <vector<string>> history; 
 
 const char *defined_command[]={
     "cd",
@@ -54,6 +58,7 @@ int my_dir(char **args){
     return 1;
 }
 int my_environ(char **args){
+     cout<<getenv(args[1])<<endl;
     return 1;
 }
 int my_echo(char **args){
@@ -80,6 +85,15 @@ int my_quit(char **args){
     return 1;
 }
 int my_history(char **args){
+     int i=0;
+    for (auto it = history.begin(); it != history.end(); ++it){
+            cout<<++i;
+            for(auto it1 = it->begin(); it1 != it->end(); ++it1){
+                cout<<" "<<*it1<<" ";
+            }
+            cout<<endl;
+    } 
+            
     return 1;
 }
 
@@ -187,6 +201,21 @@ void my_helper(){
 
         args=get_command(input);
         int i,sz=sizeof(args);
+
+        int j=0;
+        vector<string> temp;
+        if(args[0]!=NULL)
+        {
+            while(args[j]!=NULL){
+                temp.push_back(args[j]);
+
+                j++;
+            }
+            if(history.size()==100)
+                history.pop_front();
+            history.push_back(temp);
+
+        }
         status=execute_my_command(args);
 
         // status=0;
