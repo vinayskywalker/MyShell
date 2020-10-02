@@ -4,6 +4,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <dirent.h>
 
 
 
@@ -29,6 +30,18 @@ int my_clr(char **args){
 
 }
 int my_dir(char **args){
+    DIR *dir1;
+    struct dirent *dir2;
+    dir1=opendir(".");
+    if(dir1){
+        while((dir2=readdir(dir1))!=NULL){
+            printf("%s\n",dir2->d_name);
+        }
+        closedir(dir1);
+    }
+    else{
+        printf("Error\n");
+    }
     return 1;
 }
 int my_environ(char **args){
