@@ -127,7 +127,7 @@ int my_help(char **args){
         return 1;
     }
     else if(!strcmp(args[1],"echo")){
-        printf("echo <comment> - Display <comment> on the display followed by a new line.\n");
+        printf("echo <comment> - Display <comment> on the screen followed by a new line.\n");
         return 1;
     }
     else if(!strcmp(args[1],"pause")){
