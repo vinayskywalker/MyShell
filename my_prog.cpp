@@ -10,7 +10,8 @@
 #include <list> 
 // #include<bits/stdc++.h> 
 using namespace std; 
-list <vector<string>> history; 
+list <vector<string>> history;
+extern char **environ;
 
 const char *defined_command[]={
     "cd",
@@ -105,7 +106,10 @@ int my_dir(char **args){
     return 1;
 }
 int my_environ(char **args){
-    cout<<getenv(args[1])<<endl;
+    // cout<<getenv(args[1])<<endl;
+    for(char **current=environ;*current;current++){
+        cout<<(*current)<<endl;
+    }
     return 1;
 }
 int my_echo(char **args){
@@ -292,6 +296,8 @@ char* read_command(){
     }
 }
 
+
+
 void my_helper(){
     int status;
     char *command,*input;
@@ -329,9 +335,24 @@ void my_helper(){
     while(status);
 }
 int main(int argc,char** argv){
-    if(argc>1){
-        freopen(argv[1],"r",stdin);
+    if(argc==1){
+        my_helper();
     }
-    my_helper();
+    else if(argc==2){
+        FILE *fp;
+        fp=fopen(argv[1],"r");
+        if(fp==NULL){
+            cout<<"Can not open this file\n";
+            return 0;
+        }
+        char **args;
+        char ch;
+        char mycmd[50];
+        
+
+    }
+    else{
+        printf("More than two command line argument is not accepted\n");
+    }
     return 0;
 }
