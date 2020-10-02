@@ -76,6 +76,7 @@ int my_help(char **args){
     return 1;
 }
 int my_quit(char **args){
+    exit(0);
     return 1;
 }
 int my_history(char **args){
