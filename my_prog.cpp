@@ -1,14 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <sys/wait.h>
-#include <sys/types.h>
 #include <unistd.h>
 #include <dirent.h>
-#include<iostream>
+#include <iostream>
 #include <vector>
 #include <list> 
-#include <fstream>
 using namespace std; 
 list <vector<string>> history;
 extern char **environ;
@@ -339,13 +336,12 @@ void my_helper(){
             }
         }
         // status=0;
-
     }
     while(status);
 }
 int main(int argc,char** argv){
     string str=(string)get_current_dir_name();
-    shell_env.my_var=str;
+    shell_env.my_var=str+"/my_prog";
     if(argc==1){
         my_helper();
     }
