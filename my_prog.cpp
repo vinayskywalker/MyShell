@@ -101,7 +101,12 @@ int my_clr(char **args){
 int my_dir(char **args){
     DIR *dir1;
     struct dirent *dir2;
-    dir1=opendir(".");
+    if(args[1]==NULL){
+        dir1=opendir(".");
+    }
+    else{
+        dir1=opendir(args[1]);
+    }
     if(dir1){
         while((dir2=readdir(dir1))!=NULL){
             printf("%s\n",dir2->d_name);
@@ -109,7 +114,7 @@ int my_dir(char **args){
         closedir(dir1);
     }
     else{
-        printf("Error\n");
+        printf("Can not open directory\n");
     }
     return 1;
 }
