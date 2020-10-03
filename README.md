@@ -5,8 +5,8 @@ Programming Language Used: C++14\
 How to Run the program:\
 ``` g++ my_prog.cpp ```\
 (this command will generate an executable file i.e. a.out).\
-To test the 11th part :-  ``` ./a.out batchfile ```. (where ./a.out is executable file and batchfile contains a set of commands.\
-To test the remaining part:-  ./a.out\
+To test the 11th part :-  ``` ./a.out batchfile ``` \(where ./a.out is executable file and batchfile contains a set of commands.\
+To test the remaining part:-  ./a.out.
 
 Module used - \
 <stdlib.h>  -  The stdlib.h header defines four variable types, several macros, and various functions for performing general functions.\
