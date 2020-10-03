@@ -23,7 +23,7 @@ const char *defined_command[]={
 
 };
 
-typedef struct env_shell{
+struct env_shell{
     string my_var;
 };
 env_shell shell_env;
