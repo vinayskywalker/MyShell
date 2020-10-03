@@ -6,6 +6,10 @@
 #include <iostream>
 #include <vector>
 #include <list> 
+#include <sys/select.h>
+#include <iostream>
+
+
 using namespace std; 
 list <vector<string>> history;
 extern char **environ;
@@ -19,7 +23,8 @@ const char *defined_command[]={
     "pause",
     "help",
     "quit",
-    "history"
+    "history",
+    "stopwatch"
 
 };
 
@@ -152,6 +157,7 @@ int my_help(char **args){
         printf("help\n");
         printf("quit\n");
         printf("history\n");
+        printf("stopwatch\n");
         return 1;
     }
     if(!strcmp(args[1],"cd")){
@@ -190,6 +196,10 @@ int my_help(char **args){
         printf("history - Display a list of previously executed commands.\n");
         return 1;
     }
+    else if(!strcmp(args[1],"stopwatch")){
+        printf("stopwatch - A general stopwatch which will wait until 'Enter' is press or timeout happens");
+        return 1;
+    }
     else{
         printf("Command '%s' not found\n",args[1]);
         return 1;
@@ -208,6 +218,50 @@ int my_history(char **args){
             }
             cout<<endl;
     }      
+    return 1;
+}
+
+int my_stopwatch(char **args){
+    if(args[1]!=NULL){
+         int hh=(args[1][0]-'0')*10 +args[1][1]-'0';
+         int mm=(args[1][3]-'0')*10 + args[1][4]-'0';
+         int ss=(args[1][6]-'0')*10 + args[1][7]-'0';
+         
+         if(hh<24 && mm<60 && ss<60)
+         {
+            int fd;
+            char buf[2];
+            int ret,sret;
+            fd=0;
+
+            fd_set readfds;
+            struct timeval timeout;
+                FD_ZERO(&readfds);
+                FD_SET(fd,&readfds);
+                timeout.tv_sec=hh*3600 + mm*60 + ss;
+                timeout.tv_usec=0;
+
+            while(1){
+                sret=select(8,&readfds,NULL,NULL,&timeout);
+                if(sret==0){
+                    // cout<<sret<<"     sdfsd"<<endl;
+                    cout<<"Timeout"<<endl;
+                    return 1;
+                    }
+                else{
+                    // cout<<sret<<"---------------"<<endl;
+                    ret=read(fd,(void *)buf,10);
+                    if(buf[0]=='\n')
+                        return 1;
+                    }
+            }
+            return 1;
+        }
+        else 
+                cout<<"Error: Not in the format of HH:MM:SS"<<endl;
+    }
+    else
+        cout<<"Error: Need argument time in this format  HH:MM:SS"<<endl;
     return 1;
 }
 
@@ -273,6 +327,9 @@ int execute_my_command(char **args){
     }
     else if(!strcmp(args[0],defined_command[8])){
         return my_history(args);
+    }
+    else if(!strcmp(args[0],defined_command[9])){
+        return my_stopwatch(args);
     }
     else{
         printf("command '%s' not found\n",args[0]);
