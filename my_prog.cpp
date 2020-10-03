@@ -119,7 +119,7 @@ int my_environ(char **args){
     for(char **current=environ;*current;current++){
         cout<<(*current)<<endl;
     }
-    printf("MYSHELL Environment\n");
+    printf("shell=");
     cout<<shell_env.my_var<<endl;
     return 1;
 }
