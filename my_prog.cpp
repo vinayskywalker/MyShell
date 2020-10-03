@@ -8,7 +8,7 @@
 #include<iostream>
 #include <vector>
 #include <list> 
-// #include<bits/stdc++.h> 
+#include <fstream>
 using namespace std; 
 list <vector<string>> history;
 extern char **environ;
@@ -347,8 +347,24 @@ int main(int argc,char** argv){
         }
         char **args;
         char ch;
-        char mycmd[50];
-        
+        char *mycmd=(char *)malloc(100*sizeof(char *));
+        string line="";
+        if(fp==NULL){
+            printf("Can not open file\n");
+            return 0;
+        }
+        while(fgets(mycmd,50,fp)){
+            // printf("%s",mycmd);
+            int i;
+            for(i=0;i<50;i++){
+                if(mycmd[i]=='\n'){
+                    mycmd[i]='\0';
+                    break;
+                }
+            }
+            args=get_command(mycmd);
+            int status=execute_my_command(args);
+        }
 
     }
     else{
