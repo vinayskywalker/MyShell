@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <list> 
-#include <sys/select.h>
+#include <sys/select.h> //select
 #include <iostream>
 
 
@@ -52,7 +52,7 @@ int my_cd(char **args){
         path[k]=next[k];
     }
     path[next.size()]='\0';
-    int p=chdir(path);
+    int p=chdir(path);//uni
     if(p==-1){
         printf("cd: The directory %s does not exist \n",path);
     }
@@ -124,7 +124,7 @@ int my_environ(char **args){
     for(char **current=environ;*current;current++){
         cout<<(*current)<<endl;
     }
-    printf("MYSHELL Environment\n");
+    printf("shell=");
     cout<<shell_env.my_var<<endl;
     return 1;
 }
@@ -202,7 +202,7 @@ int my_help(char **args){
         return 1;
     }
     else if(!strcmp(args[1],"stopwatch")){
-        printf("stopwatch - A general stopwatch which will wait until 'Enter' is press or timeout happens");
+        printf("stopwatch - A general stopwatch which will wait until 'Enter' is press or timeout happens.\n");
         return 1;
     }
     else{
