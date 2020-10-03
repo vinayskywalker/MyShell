@@ -26,6 +26,12 @@ const char *defined_command[]={
 
 };
 
+typedef struct env_shell{
+    string my_var;
+};
+env_shell shell_env;
+
+
 int my_cd(char **args){
     if(args[1]==NULL){
         return 1;
@@ -107,9 +113,12 @@ int my_dir(char **args){
 }
 int my_environ(char **args){
     // cout<<getenv(args[1])<<endl;
+    printf("Bash Shell Environments\n");
     for(char **current=environ;*current;current++){
         cout<<(*current)<<endl;
     }
+    printf("MYSHELL Environment\n");
+    cout<<shell_env.my_var<<endl;
     return 1;
 }
 int my_echo(char **args){
@@ -316,6 +325,7 @@ void my_helper(){
 
         int j=0;
         vector<string> temp;
+        status=execute_my_command(args);
         if(args[0]!=NULL)
         {
             while(args[j]!=NULL){
@@ -324,17 +334,18 @@ void my_helper(){
             }
             if(history.size()==100)
                 history.pop_front();
-            history.push_back(temp);
-
+            if(history.back()!=temp){
+                history.push_back(temp);
+            }
         }
-        status=execute_my_command(args);
-
         // status=0;
 
     }
     while(status);
 }
 int main(int argc,char** argv){
+    string str=(string)get_current_dir_name();
+    shell_env.my_var=str;
     if(argc==1){
         my_helper();
     }
@@ -364,8 +375,13 @@ int main(int argc,char** argv){
             }
             args=get_command(mycmd);
             int status=execute_my_command(args);
+            vector<string> mystring;
+            mystring.push_back(mycmd);
+            history.push_back(mystring);
+            if(status==0){
+                return 0;
+            }
         }
-
     }
     else{
         printf("More than two command line argument is not accepted\n");
