@@ -78,13 +78,16 @@ int my_cd(char **args){
             }
 
         }
+        // cout<<start<<endl;
         char pwd[stop+next.size()-start+2];
         for(int k=0;k<=stop;k++){
             pwd[k]=prev[k];
             if(k==stop){
-                pwd[++k]='/';
+                if(start!=next.size())
+                    pwd[++k]='/';
                 for(int j=start;j<next.size();j++){
                     k++;
+
                     pwd[k]=next[j];
                 }
                 pwd[k+1]='\0';
@@ -428,8 +431,8 @@ int main(int argc,char** argv){
             for(i=0;i<50;i++){
                 if(mycmd[i]=='\n'){
                     mycmd[i]='\0';
-                    break;
-                }
+                    break
+;                }
             }
             args=get_command(mycmd);
             int status=execute_my_command(args);
